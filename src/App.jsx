@@ -457,9 +457,9 @@ function NotFound() {
 
 // -------------------- Meta (SEO & Social) ----------------------------------
 function Meta() {
-  const title = "Davyd Voloshyn"; // renamed per request
+  const title = "Davyd Voloshyn"; 
   const desc = "Data Analytics & Machine Learning — portfolio, experience, research & projects.";
-  const url = "https://your-domain.com"; // TODO: set your deployed URL
+  const url = "https://davyd-voloshyn.com";
   const image = `${url}/og.png`;
   return (
     <Helmet>
