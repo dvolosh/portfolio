@@ -173,7 +173,6 @@ function Navbar() {
   return (
     <header className="sticky top-0 z-40">
       <div className="relative mx-auto max-w-7xl px-4 h-14 sm:h-16 flex items-center justify-center">
-        {/* Centered links (no branding) */}
         <nav className="hidden md:flex items-center gap-6 rounded-full bg-slate-950/70 backdrop-blur px-4 py-1.5 ring-1 ring-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
           {links.map((l) => (
             <NavLink
