@@ -43,7 +43,7 @@ export default function Navbar() {
   );
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-black/50 backdrop-blur">
+    <header className="sticky top-0 z-[100] border-b border-white/10 bg-black/50 backdrop-blur">
       <div className="relative container-page h-14 sm:h-16 flex items-center justify-center">
         <nav className="hidden md:flex items-center gap-6 rounded-full bg-black/50 backdrop-blur px-4 py-1.5 ring-1 ring-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
           <LinkItem id="home" label="Home" />
