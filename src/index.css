@@ -2,14 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{
-  --page-max: 64rem; 
-}
+:root { --page-max: 72rem; }
 html, body, #root { height: 100%; }
-body { @apply bg-white text-slate-900; font-family: Inter, system-ui, sans-serif; }
-.container-page { @apply mx-auto px-4 sm:px-6; max-width: var(--page-max); }
-.section { @apply py-12; }
-.section-title { @apply text-2xl sm:text-3xl font-semibold tracking-tight mb-6; }
-.card { @apply rounded-xl border border-slate-200 bg-white p-5; }
-.badge { @apply text-[11px] px-2 py-0.5 rounded-full bg-slate-50  ; }
-.divider { @apply border-t border-slate-200; }
+html { scroll-behavior: smooth; }
+body { @apply bg-black text-white font-sans antialiased; }
+
+/* Shared container + spacing */
+.container-page { @apply mx-auto px-6 sm:px-8; max-width: var(--page-max); }
+.section { @apply py-16 sm:py-20; }
+
+/* Optional: pretty nav shell if you use it elsewhere */
+.nav-shell { @apply hidden md:flex items-center gap-6 rounded-full bg-black/50 backdrop-blur px-4 py-1.5 ring-1 ring-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.35)]; }
+
+/* Card/Chip helpers (some sections duplicate, safe here too) */
+.card { @apply rounded-2xl border border-blue-500/30 bg-black/60 backdrop-blur p-5; }
+
+.glow-avatar {
+  position: relative;
+  display: inline-block;
+  border-radius: 1.5rem;      /* match your rounded-3xl look */
+  isolation: isolate;         /* keep the glows behind the img */
+}
+
+/* Soft outer glow */
+.glow-avatar::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  z-index: 0;
+  border-radius: inherit;
+  /* layered blue radials (matches your palette) */
+  background:
+    radial-gradient(60% 60% at 50% 40%, rgba(2,125,250,0.55), transparent 70%),
+    radial-gradient(50% 50% at 30% 70%, rgba(3,158,251,0.45), transparent 70%),
+    radial-gradient(40% 40% at 70% 60%, rgba(36,182,245,0.35), transparent 70%);
+  filter: blur(22px);
+  opacity: 0.6;
+  pointer-events: none;
+  animation: glowPulse 4s ease-in-out infinite;  /* gentle breathing */
+}
+
+/* Softer inner fill */
+.glow-avatar::after {
+  content: "";
+  position: absolute;
+  inset: -6%;
+  z-index: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(65% 65% at 50% 35%, rgba(2,98,247,0.45), transparent 70%),
+    radial-gradient(55% 55% at 70% 60%, rgba(3,158,251,0.25), transparent 70%);
+  filter: blur(14px);
+  opacity: 0.4;
+  pointer-events: none;
+  animation: glowPulseSlow 6s ease-in-out infinite;
+}
+
+/* The image stays on top */
+.glow-avatar > img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  border-radius: inherit;
+
+  /* ADD THESE: */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  box-shadow:
+    0 0 0 2px rgba(2,98,247,0.35),
+    0 16px 48px rgba(2,98,247,0.28);
+  transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+
+/* Optional: hover lift */
+.glow-avatar:hover > img,
+.glow-avatar:focus-within > img {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 2px rgba(3,158,251,0.5),
+    0 24px 60px rgba(2,98,247,0.35);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .glow-avatar::before,
+  .glow-avatar::after { animation: none; }
+}
