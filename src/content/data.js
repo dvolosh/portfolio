@@ -2,7 +2,7 @@ import { Github, Linkedin } from "lucide-react";
 
 export const ME = {
   name: "Davyd Voloshyn",
-  tagline: "Data Analytics & Machine Learning | Business Intelligence",
+  tagline: "Data Analytics & Machine Learning",
   blurb:
     "I’m a senior at UNC–Chapel Hill studying CS & Economics. I blend research rigor with product sense to turn big questions into data-driven outcomes, and I'm eager to apply my skills for advanced analysis and storytelling.",
   email: "dav.volosh@gmail.com",
