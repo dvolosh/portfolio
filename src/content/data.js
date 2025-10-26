@@ -2,7 +2,7 @@ import { Github, Linkedin } from "lucide-react";
 
 export const ME = {
   name: "Davyd Voloshyn",
-  tagline: "Data Analytics & Machine Learning",
+  tagline: "Data Analytics & Machine Learning | Business Intelligence",
   blurb:
     "I’m a senior at UNC–Chapel Hill studying CS & Economics. I blend research rigor with product sense to turn big questions into data-driven outcomes, and I'm eager to apply my skills for advanced analysis and storytelling.",
   email: "dav.volosh@gmail.com",
@@ -21,9 +21,9 @@ export const EXPERIENCE = [
     period: "Jan 2025 – Present",
     where: "Remote, US",
     bullets: [
-      "Developed a multiprocessing parallel computing ETL pipeline for large-scale record linkage and NLP entity resolution in Python.",
-      "Built firm-level econometric time-series panel from joins, APIs, and text data. Data-processing and exploratory data analysis (EDA).",
-      "LLM entity matching on 100GB+ data with agentic workflows. Produce documentation in Markdown and Jupyter Notebooks."
+      "Developed a multiprocessing parallel computing ETL pipeline for large-scale 200 GB+ record linkage and NLP entity resolution.",
+      "Perform exploratory data analysis (EDA), tokenization, data preprocessing and integrate multiple data sources in Python pandas",
+      "Conduct time-series analysis and political leaning data modeling, producing documentation in Jupyter Notebooks and Markdown."
     ],
   },
   {
