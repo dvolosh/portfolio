@@ -35,7 +35,7 @@ export const EXPERIENCE = [
     bullets: [
       "Reported NPS and survey data analysis to identify improvement areas, satisfaction drivers, and inform strategic initiatives.",
       "Developed Streamlit and Power BI dashboards with KPIs and client segmentation for executives to prioritize product features.",
-      "Applied and visualized topic modeling and summarization methods to turn textual data into actionable business insights.",
+      "Implemented and visualized topic modeling and summarization methods to turn textual data into actionable business insights.",
     ],
   },
   {
@@ -56,9 +56,9 @@ export const EXPERIENCE = [
     where: "Chapel Hill, NC",
     logo: "/logos/unc_for_econ.png",
     bullets: [
-      "Quantitative Research: modeling and forecasting market risk with high-frequency realized volatility and textual data analytics.",
-      "Achieved 30% accuracy increase with a more robust model including NLP methodologies and FinBERT LLM to quantify sentiment.",
-      "Data mining: scraped and analyzed over 500,000 headlines and 50,000 full-text articles from WSJ, The Economist, and others.",
+      "Conducted quantitative research on forecasting market volatility using high-frequency data and large-scale textual data analytics.",
+      "Improved base model accuracy by 25% with NLP by deriving various macro indicators and FinBERT LLM to quantify sentiment.",
+      "Built a web-crawler for data mining over 500,000 headlines and 50,000 full-text articles from WSJ, The Economist and others.",
     ],
   },
   {
