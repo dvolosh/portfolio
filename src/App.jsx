@@ -1,21 +1,21 @@
-// src/App.jsx
 import React from "react";
 import Navbar from "./components/NavBar";
 import Hero from "./sections/Hero";
-import ExperienceSection from "./sections/Experience";
+import Journey from "./sections/Journey";
 import SkillsSection from "./sections/Skills";
 import WorkSection from "./sections/Work";
-import LiquidEther from "./components/LiquidEther"; // ⬅️ import it
+import Contact from "./sections/Contact";
+import Footer from "./components/Footer";
+import LiquidEther from "./components/LiquidEther";
 import "./index.css";
 
 export default function App() {
   return (
     <>
-      {/* Full-site background (behind everything) */}
       <div className="fixed inset-0 -z-10">
         <LiquidEther
           style={{ width: "100%", height: "100%" }}
-          colors={["#039EFB", "#027DFA", "#0262F7", "#010DA8"]} // matches your new palette
+          colors={["#039EFB", "#027DFA", "#0262F7", "#010DA8"]}
           resolution={0.45}
           dt={0.014}
           BFECC
@@ -26,7 +26,6 @@ export default function App() {
           autoResumeDelay={3000}
           autoRampDuration={0.6}
           className="pointer-events-none"
-          // the following only matter if you remove pointer-events-none
           mouseForce={20}
           cursorSize={100}
           isViscous={false}
@@ -37,17 +36,16 @@ export default function App() {
         />
       </div>
 
-      {/* Foreground content */}
       <div className="min-h-screen text-white">
-        {/* optional: subtle readability veil over the canvas */}
-        {/* <div className="fixed inset-0 -z-5 bg-black/30" /> */}
-
         <Navbar />
         <Hero />
-        <ExperienceSection />
+        <Journey />
         <SkillsSection />
         <WorkSection />
+        <Contact />
       </div>
+
+      <Footer />
     </>
   );
 }

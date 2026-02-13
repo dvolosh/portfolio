@@ -5,7 +5,7 @@ import {
   SiNodedotjs, SiR, SiMysql, SiTableau, SiStreamlit, SiJavascript, SiNumpy
 } from "react-icons/si";
 import { FaJava, FaGitAlt } from "react-icons/fa6";
-import { BookText, Code2, BarChart3 } from "lucide-react";
+import { Database, Brain, Code, TrendingUp } from "lucide-react";
 
 // Simple chip component
 function Chip({ children }) {
@@ -16,24 +16,25 @@ function Chip({ children }) {
   );
 }
 
-// Highlight row (3 cards)
+// Highlight row (4 cards now)
 function HighlightRow() {
   const groups = [
-    { icon: BookText, title: "Natural Language Processing", items: ["NLTK", "Gensim", "TensorFlow"] },
-    { icon: Code2, title: "Scripting", items: ["Python", "R", "SQL"] },
-    { icon: BarChart3, title: "Data Visualizations", items: ["Streamlit", "Power BI", "Tableau"] },
+    { icon: Database, title: "Data Engineering", items: ["SQL", "BigQuery", "ETL Pipelines", "Apache Spark"] },
+    { icon: Brain, title: "Machine Learning", items: ["TensorFlow", "scikit-learn", "NLP", "Vertex AI"] },
+    { icon: Code, title: "Development", items: ["Python", "R", "JavaScript", "Git", "Docker", "Next.js"] },
+    { icon: TrendingUp, title: "Analytics & BI", items: ["Tableau", "Power BI", "Streamlit", "pandas", "SQL", "Plotly Dash"] },
   ];
 
   return (
-    <div className="mt-10 grid gap-4 sm:grid-cols-3">
+    <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {groups.map(({ icon: Icon, title, items }) => (
         <div
           key={title}
-          className="rounded-2xl border border-blue-500/30 bg-black/60 backdrop-blur p-5"
+          className="rounded-2xl border border-blue-500/30 bg-black/60 backdrop-blur p-5 hover:border-blue-400/40 transition-all"
         >
           <div className="flex items-center gap-2 mb-3">
             <Icon className="text-blue-300" size={18} />
-            <div className="font-semibold">{title}</div>
+            <div className="font-semibold text-sm">{title}</div>
           </div>
           <div className="flex flex-wrap gap-2">
             {items.map((t) => <Chip key={t}>{t}</Chip>)}
@@ -49,9 +50,9 @@ function FallbackRow() {
     <div className="relative overflow-hidden">
       <div className="flex gap-6 py-4 opacity-70">
         {[
-          "React","Next.js","TypeScript","Tailwind","Python","pandas",
-          "sklearn","TensorFlow","AWS","Azure","Snowflake","Power BI",
-          "Git","PostgreSQL","Node.js"
+          "React", "Next.js", "TypeScript", "Tailwind", "Python", "pandas",
+          "sklearn", "TensorFlow", "AWS", "Azure", "Snowflake", "Power BI",
+          "Git", "PostgreSQL", "Node.js"
         ].map((t) => (
           <span
             key={t}
@@ -108,14 +109,15 @@ export default function SkillsSection() {
   }
 
   return (
-    <section id="skills" className="py-16 sm:py-20">
+    <section id="skills" className="section">
       <div className="container-page">
-        <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-center">Skills</h2>
+        <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-center">Technical Skills</h2>
+        <p className="mt-3 text-center text-white/70 max-w-2xl mx-auto">
+          Engineering pipelines, training models, and visualizing insights at scale
+        </p>
 
-        {/* Slider */}
         <div className="mt-8">{content}</div>
 
-        {/* Highlighted groups */}
         <HighlightRow />
       </div>
     </section>

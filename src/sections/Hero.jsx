@@ -8,14 +8,12 @@ import AvatarGlow from "../components/AvatarGlow";
 
 export default function Hero() {
   return (
-    <section id="home" className="relative py-16 sm:py-20">
-      {/* Keep the background *behind* everything */}
+    <section id="home" className="relative flex items-center justify-center" style={{ minHeight: 'calc(100vh - 4rem)' }}>
       <div className="-z-10">
         <GlowBackground />
       </div>
 
-      <div className="container-page grid md:grid-cols-2 gap-10 items-center">
-        {/* Left: text */}
+      <div className="container-page w-full grid md:grid-cols-2 gap-10 items-center py-8">
         <div>
           <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-center md:text-left mb-2">
             <GradientText
@@ -65,38 +63,13 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right: avatar with glow */}
         <div className="flex justify-center md:justify-end">
-          <div
-            className="
-              relative z-50              /* sit above any background */
-              w-72 h-72 sm:w-80 sm:h-80 md:w-[28rem] md:h-[28rem]
-              overflow-visible
-            "
-          >
-            {/* Glow layer behind the image */}
-            <div
-              aria-hidden
-              className="
-                pointer-events-none absolute inset-[-12%] rounded-3xl z-0
-                opacity-60 blur-2xl
-                animate-glowPulse
-                /* stacked radial glows */
-                bg-[radial-gradient(60%_60%_at_50%_40%,rgba(2,125,250,0.55),transparent_70%),radial-gradient(50%_50%_at_30%_70%,rgba(3,158,251,0.45),transparent_70%),radial-gradient(40%_40%_at_70%_60%,rgba(36,182,245,0.35),transparent_70%)]
-              "
-              /* uncomment this red to sanity-check visibility:
-                 style={{ background: 'red' }}
-              */
-            />
-
-            
           <AvatarGlow
             src="/picture.jpg"
             alt="Davyd Voloshyn"
             className="w-72 h-72 sm:w-80 sm:h-80 md:w-[28rem] md:h-[28rem] rounded-3xl"
           />
         </div>
-      </div>
       </div>
     </section>
   );

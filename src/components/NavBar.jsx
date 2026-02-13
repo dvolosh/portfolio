@@ -21,7 +21,7 @@ function useScrollSpy(ids) {
 }
 
 export default function Navbar() {
-  const ids = ["home", "experience", "skills", "work"];
+  const ids = ["home", "journey", "skills", "work", "contact"];
   const active = useScrollSpy(ids);
   const [open, setOpen] = useState(false);
 
@@ -29,15 +29,13 @@ export default function Navbar() {
     <a
       href={`#${id}`}
       onClick={() => setOpen(false)}
-      className={`group relative inline-block text-sm ${
-        active === id ? "text-blue-300" : "text-white/80 hover:text-blue-300"
-      }`}
+      className={`group relative inline-block text-sm ${active === id ? "text-blue-300" : "text-white/80 hover:text-blue-300"
+        }`}
     >
       {label}
       <span
-        className={`pointer-events-none absolute -bottom-1 left-0 h-[2px] w-full origin-left bg-blue-400/70 transition-transform ${
-          active === id ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-        }`}
+        className={`pointer-events-none absolute -bottom-1 left-0 h-[2px] w-full origin-left bg-blue-400/70 transition-transform ${active === id ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+          }`}
       />
     </a>
   );
@@ -47,9 +45,10 @@ export default function Navbar() {
       <div className="relative container-page h-14 sm:h-16 flex items-center justify-center">
         <nav className="hidden md:flex items-center gap-6 rounded-full bg-black/50 backdrop-blur px-4 py-1.5 ring-1 ring-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
           <LinkItem id="home" label="Home" />
-          <LinkItem id="experience" label="Experience" />
+          <LinkItem id="journey" label="Journey" />
           <LinkItem id="skills" label="Skills" />
-          <LinkItem id="work" label="Research & Projects" />
+          <LinkItem id="work" label="Projects" />
+          <LinkItem id="contact" label="Contact" />
         </nav>
         <div className="absolute right-4 md:hidden">
           <button
@@ -65,9 +64,10 @@ export default function Navbar() {
         <div className="md:hidden border-t border-white/10 bg-black/80 backdrop-blur">
           <div className="container-page py-2 flex flex-col gap-2">
             <LinkItem id="home" label="Home" />
-            <LinkItem id="experience" label="Experience" />
+            <LinkItem id="journey" label="Journey" />
             <LinkItem id="skills" label="Skills" />
-            <LinkItem id="work" label="Research & Projects" />
+            <LinkItem id="work" label="Projects" />
+            <LinkItem id="contact" label="Contact" />
           </div>
         </div>
       )}

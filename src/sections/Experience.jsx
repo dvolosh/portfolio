@@ -18,21 +18,15 @@ export default function ExperienceSection() {
           Experience
         </h2>
 
-        {/* SINGLE container timeline */}
         <motion.div
           {...fadeUp}
           className="mt-8 rounded-2xl bg-black/80 border border-white/10 ring-1 ring-white/10 backdrop-blur p-5 sm:p-7 shadow-[0_16px_48px_rgba(0,0,0,0.55)]"
         >
           <div className="relative">
-            {/* Vertical rail positioned at the center of the logo column */}
-            {/* On sm+: logo column is 80px wide -> center = 40px; on mobile 72px -> center = 36px */}
-
             <ol className="space-y-8">
               {EXPERIENCE.map((item, i) => (
                 <li key={i} className="relative">
-                  {/* Two-column layout: logo left, content right */}
                   <div className="grid grid-cols-[72px,1fr] sm:grid-cols-[80px,1fr] gap-4 sm:gap-6">
-                    {/* LEFT: logo as the “marker” on the rail */}
                     <div className="relative flex items-start justify-center">
                       <div className="relative z-10 rounded-xl bg-white/5 ring-1 ring-white/15 p-2.5 sm:p-3 shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
                         <img
@@ -44,7 +38,6 @@ export default function ExperienceSection() {
                       </div>
                     </div>
 
-                    {/* RIGHT: content */}
                     <div>
                       <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
                         <h3 className="text-lg sm:text-xl font-semibold leading-tight">

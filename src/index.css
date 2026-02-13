@@ -2,47 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { --page-max: 72rem; }
-html, body, #root { height: 100%; }
-html { scroll-behavior: smooth; }
-body { @apply bg-black text-white font-sans antialiased; }
+:root {
+  --page-max: 72rem;
+}
 
-/* Shared container + spacing */
-.container-page { @apply mx-auto px-6 sm:px-8; max-width: var(--page-max); }
-.section { @apply py-16 sm:py-20; }
+html,
+body,
+#root {
+  height: 100%;
+}
 
-/* Optional: pretty nav shell if you use it elsewhere */
-.nav-shell { @apply hidden md:flex items-center gap-6 rounded-full bg-black/50 backdrop-blur px-4 py-1.5 ring-1 ring-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.35)]; }
+html {
+  scroll-behavior: smooth;
+}
 
-/* Card/Chip helpers (some sections duplicate, safe here too) */
-.card { @apply rounded-2xl border border-blue-500/30 bg-black/60 backdrop-blur p-5; }
+body {
+  @apply bg-black text-white font-sans antialiased;
+}
+
+.container-page {
+  @apply mx-auto px-6 sm:px-8;
+  max-width: var(--page-max);
+}
+
+.section {
+  @apply py-16 sm:py-20;
+}
+
+.nav-shell {
+  @apply hidden md:flex items-center gap-6 rounded-full bg-black/50 backdrop-blur px-4 py-1.5 ring-1 ring-white/10;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.card {
+  @apply rounded-2xl border border-white/10 bg-black/80 backdrop-blur p-5 sm:p-7 ring-1 ring-white/10;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+}
 
 .glow-avatar {
   position: relative;
   display: inline-block;
-  border-radius: 1.5rem;      /* match your rounded-3xl look */
-  isolation: isolate;         /* keep the glows behind the img */
+  border-radius: 1.5rem;
+  isolation: isolate;
 }
 
-/* Soft outer glow */
 .glow-avatar::before {
   content: "";
   position: absolute;
   inset: -12%;
   z-index: 0;
   border-radius: inherit;
-  /* layered blue radials (matches your palette) */
   background:
-    radial-gradient(60% 60% at 50% 40%, rgba(2,125,250,0.55), transparent 70%),
-    radial-gradient(50% 50% at 30% 70%, rgba(3,158,251,0.45), transparent 70%),
-    radial-gradient(40% 40% at 70% 60%, rgba(36,182,245,0.35), transparent 70%);
+    radial-gradient(60% 60% at 50% 40%, rgba(2, 125, 250, 0.55), transparent 70%),
+    radial-gradient(50% 50% at 30% 70%, rgba(3, 158, 251, 0.45), transparent 70%),
+    radial-gradient(40% 40% at 70% 60%, rgba(36, 182, 245, 0.35), transparent 70%);
   filter: blur(22px);
   opacity: 0.6;
   pointer-events: none;
-  animation: glowPulse 4s ease-in-out infinite;  /* gentle breathing */
+  animation: glowPulse 4s ease-in-out infinite;
 }
 
-/* Softer inner fill */
 .glow-avatar::after {
   content: "";
   position: absolute;
@@ -50,44 +69,64 @@ body { @apply bg-black text-white font-sans antialiased; }
   z-index: 0;
   border-radius: inherit;
   background:
-    radial-gradient(65% 65% at 50% 35%, rgba(2,98,247,0.45), transparent 70%),
-    radial-gradient(55% 55% at 70% 60%, rgba(3,158,251,0.25), transparent 70%);
+    radial-gradient(65% 65% at 50% 35%, rgba(2, 98, 247, 0.45), transparent 70%),
+    radial-gradient(55% 55% at 70% 60%, rgba(3, 158, 251, 0.25), transparent 70%);
   filter: blur(14px);
   opacity: 0.4;
   pointer-events: none;
   animation: glowPulseSlow 6s ease-in-out infinite;
 }
 
-/* The image stays on top */
-.glow-avatar > img {
+.glow-avatar>img {
   position: relative;
   z-index: 1;
   display: block;
   border-radius: inherit;
-
-  /* ADD THESE: */
   width: 100%;
   height: 100%;
   object-fit: cover;
-
   box-shadow:
-    0 0 0 2px rgba(2,98,247,0.35),
-    0 16px 48px rgba(2,98,247,0.28);
+    0 0 0 2px rgba(2, 98, 247, 0.35),
+    0 16px 48px rgba(2, 98, 247, 0.28);
   transition: transform 300ms ease, box-shadow 300ms ease;
 }
 
-
-/* Optional: hover lift */
-.glow-avatar:hover > img,
-.glow-avatar:focus-within > img {
+.glow-avatar:hover>img,
+.glow-avatar:focus-within>img {
   transform: translateY(-2px);
   box-shadow:
-    0 0 0 2px rgba(3,158,251,0.5),
-    0 24px 60px rgba(2,98,247,0.35);
+    0 0 0 2px rgba(3, 158, 251, 0.5),
+    0 24px 60px rgba(2, 98, 247, 0.35);
 }
 
-/* Respect reduced motion */
+@keyframes glowPulse {
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes glowPulseSlow {
+
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+
   .glow-avatar::before,
-  .glow-avatar::after { animation: none; }
+  .glow-avatar::after {
+    animation: none;
+  }
 }
