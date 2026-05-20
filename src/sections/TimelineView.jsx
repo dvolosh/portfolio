@@ -72,12 +72,10 @@ function TimelineBar({ item, leftPct, widthPct, isPresent, rowIndex }) {
             style={{ backgroundColor: color }}
           />
 
-          {/* Label (only show if bar is wide enough) */}
-          {widthPct > 8 && (
-            <span className="text-[11px] sm:text-xs text-white/90 font-medium truncate whitespace-nowrap pointer-events-none select-none">
-              {item.role}
-            </span>
-          )}
+          {/* Label — always shown, CSS truncate handles narrow bars (shows e.g. "D...") */}
+          <span className="text-[11px] sm:text-xs text-white/90 font-medium truncate whitespace-nowrap pointer-events-none select-none min-w-0 overflow-hidden">
+            {item.role}
+          </span>
 
           {/* Present pulse indicator */}
           {isPresent && (

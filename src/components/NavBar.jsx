@@ -1,5 +1,17 @@
 import React, { useState } from "react";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
+
+/* ── Track whether user has scrolled past the hero ── */
+function useScrolled(threshold = 60) {
+  const [scrolled, setScrolled] = React.useState(false);
+  React.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > threshold);
+    onScroll(); // set initial state
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [threshold]);
+  return scrolled;
+}
 
 function useScrollSpy(ids) {
   const [active, setActive] = React.useState(ids[0]);
@@ -24,45 +36,68 @@ export default function Navbar() {
   const ids = ["home", "journey", "skills", "work", "contact"];
   const active = useScrollSpy(ids);
   const [open, setOpen] = useState(false);
+  const scrolled = useScrolled(60);
 
   const LinkItem = ({ id, label }) => (
     <a
       href={`#${id}`}
       onClick={() => setOpen(false)}
-      className={`group relative inline-block text-sm ${active === id ? "text-blue-300" : "text-white/80 hover:text-blue-300"
-        }`}
+      className={`group relative inline-block text-sm transition-colors duration-200 ${
+        active === id ? "text-blue-300" : "text-white/75 hover:text-white"
+      }`}
     >
       {label}
       <span
-        className={`pointer-events-none absolute -bottom-1 left-0 h-[2px] w-full origin-left bg-blue-400/70 transition-transform ${active === id ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-          }`}
+        className={`pointer-events-none absolute -bottom-1 left-0 h-[2px] w-full origin-left bg-blue-400/70 transition-transform duration-200 ${
+          active === id ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+        }`}
       />
     </a>
   );
 
   return (
-    <header className="sticky top-0 z-[100] border-b border-white/10 bg-black/50 backdrop-blur">
+    <header
+      className="sticky top-0 z-[100] transition-all duration-500"
+      style={{
+        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent",
+        background: scrolled ? "rgba(0,0,0,0.55)" : "transparent",
+        backdropFilter: scrolled ? "blur(16px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
+      }}
+    >
       <div className="relative container-page h-14 sm:h-16 flex items-center justify-center">
-        <nav className="hidden md:flex items-center gap-6 rounded-full bg-black/50 backdrop-blur px-4 py-1.5 ring-1 ring-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
+
+        {/* Desktop nav — pill fades in/out, links always visible */}
+        <nav
+          className="hidden md:flex items-center gap-7 rounded-full px-5 py-2 transition-all duration-500"
+          style={{
+            background: scrolled ? "rgba(0,0,0,0.35)" : "transparent",
+            boxShadow: scrolled ? "0 4px 24px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.08)" : "none",
+          }}
+        >
           <LinkItem id="home" label="Home" />
           <LinkItem id="journey" label="Journey" />
           <LinkItem id="skills" label="Skills" />
           <LinkItem id="work" label="Projects" />
           <LinkItem id="contact" label="Contact" />
         </nav>
+
+        {/* Mobile hamburger */}
         <div className="absolute right-4 md:hidden">
           <button
             onClick={() => setOpen((v) => !v)}
-            className="p-2 rounded-lg border border-blue-500/40 text-white"
-            aria-label="Open menu"
+            className="p-2 rounded-lg border border-white/10 text-white/80 hover:text-white transition-colors"
+            aria-label={open ? "Close menu" : "Open menu"}
           >
-            <Menu size={18} />
+            {open ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
+
+      {/* Mobile dropdown */}
       {open && (
         <div className="md:hidden border-t border-white/10 bg-black/80 backdrop-blur">
-          <div className="container-page py-2 flex flex-col gap-2">
+          <div className="container-page py-3 flex flex-col gap-3">
             <LinkItem id="home" label="Home" />
             <LinkItem id="journey" label="Journey" />
             <LinkItem id="skills" label="Skills" />
