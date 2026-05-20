@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, FileText } from "lucide-react";
 import { PROJECTS, RESEARCH } from "../content/data";
 
 const fadeUp = {
@@ -17,16 +17,15 @@ function FeaturedProject({ project, index }) {
       transition={{ delay: index * 0.1 }}
       className="relative rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-950/40 via-black/60 to-black/60 backdrop-blur p-8 sm:p-10 shadow-[0_16px_48px_rgba(0,0,0,0.55)] hover:shadow-[0_20px_60px_rgba(59,130,246,0.25)] transition-all duration-300 group"
     >
-      <div className="absolute top-4 right-4">
-        <div className="px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-xs text-blue-300 font-medium">
-          {project.category}
-        </div>
-      </div>
-
       <div className="mb-4">
         <h3 className="text-2xl sm:text-3xl font-semibold">{project.title}</h3>
+        {project.category && (
+          <div className="mt-2 inline-block px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-xs text-blue-300 font-medium">
+            {project.category}
+          </div>
+        )}
         {project.subtitle && (
-          <p className="mt-1 text-blue-300/80 text-sm sm:text-base">{project.subtitle}</p>
+          <p className="mt-1.5 text-blue-300/80 text-sm sm:text-base">{project.subtitle}</p>
         )}
         {project.period && (
           <p className="mt-1 text-white/50 text-sm">{project.period}</p>
@@ -74,12 +73,56 @@ function FeaturedProject({ project, index }) {
   );
 }
 
+/* ── Featured Research Card (Vant-style elevated card) ── */
+function FeaturedResearch({ research, index }) {
+  return (
+    <motion.div
+      {...fadeUp}
+      transition={{ delay: index * 0.1 }}
+      className="relative rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-950/40 via-black/60 to-black/60 backdrop-blur p-8 sm:p-10 shadow-[0_16px_48px_rgba(0,0,0,0.55)] hover:shadow-[0_20px_60px_rgba(59,130,246,0.25)] transition-all duration-300 group"
+    >
+      <div className="mb-4">
+        <h3 className="text-xl sm:text-2xl font-semibold leading-tight">{research.title}</h3>
+        <div className="mt-2 inline-block px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-xs text-blue-300 font-medium">
+          Quantitative Research
+        </div>
+      </div>
+
+      <p className="text-white/80 leading-relaxed mb-6">{research.blurb}</p>
+
+      <div className="flex flex-wrap gap-2 mb-6">
+        {research.tags?.map((tag, i) => (
+          <span
+            key={i}
+            className="px-3 py-1 rounded-lg bg-blue-500/10 border border-blue-500/20 text-xs text-white/70"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      {research.link && (
+        <a
+          href={research.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600/90 hover:bg-blue-500 text-white font-medium transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.5)]"
+        >
+          <FileText size={16} />
+          Read Paper
+          <ExternalLink size={16} />
+        </a>
+      )}
+    </motion.div>
+  );
+}
+
 function ResearchCard({ research, index }) {
   return (
     <motion.div
       {...fadeUp}
       transition={{ delay: index * 0.1 }}
-      className="rounded-2xl border border-blue-500/30 bg-black/60 backdrop-blur p-6 shadow-[0_12px_36px_rgba(0,0,0,0.45)] hover:border-blue-400/50 transition-all duration-300"
+      className="rounded-2xl border border-blue-500/30 bg-black/60 backdrop-blur p-6 sm:p-8 shadow-[0_12px_36px_rgba(0,0,0,0.45)] hover:border-blue-400/50 transition-all duration-300"
     >
       <h3 className="text-lg sm:text-xl font-semibold leading-tight mb-3">{research.title}</h3>
 
@@ -156,6 +199,8 @@ function ProjectCard({ project, index }) {
 export default function WorkSection() {
   const featuredProjects = PROJECTS.filter(p => p.featured);
   const otherProjects = PROJECTS.filter(p => !p.featured);
+  const featuredResearch = RESEARCH.filter(r => r.featured);
+  const otherResearch = RESEARCH.filter(r => !r.featured);
 
   return (
     <section id="work" className="section">
@@ -167,12 +212,14 @@ export default function WorkSection() {
           Applying data science to real-world problems through research and production systems
         </p>
 
+        {/* Featured Projects */}
         <div className="mt-12 space-y-6">
           {featuredProjects.map((project, index) => (
             <FeaturedProject key={project.title} project={project} index={index} />
           ))}
         </div>
 
+        {/* Research — vertical stack */}
         {RESEARCH.length > 0 && (
           <>
             <div className="mt-16 mb-8">
@@ -182,14 +229,18 @@ export default function WorkSection() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              {RESEARCH.map((research, index) => (
+            <div className="space-y-6">
+              {featuredResearch.map((research, index) => (
+                <FeaturedResearch key={research.title} research={research} index={index} />
+              ))}
+              {otherResearch.map((research, index) => (
                 <ResearchCard key={research.title} research={research} index={index} />
               ))}
             </div>
           </>
         )}
 
+        {/* Other Projects */}
         {otherProjects.length > 0 && (
           <>
             <div className="mt-16 mb-8">

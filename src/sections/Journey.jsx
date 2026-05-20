@@ -1,7 +1,8 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { Briefcase, GraduationCap, Users } from "lucide-react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Briefcase, Users, List, CalendarRange } from "lucide-react";
 import { EXPERIENCE, LEADERSHIP } from "../content/data";
+import TimelineView from "./TimelineView";
 
 const fadeUp = {
     initial: { opacity: 0, y: 24, filter: "blur(4px)" },
@@ -60,7 +61,61 @@ function ExperienceCard({ item, icon: Icon, index }) {
     );
 }
 
+/* ── Toggle pill component ── */
+function ViewToggle({ view, setView }) {
+    return (
+        <div className="flex items-center justify-center mt-6">
+            <div className="inline-flex rounded-full bg-black/60 border border-white/10 p-1 backdrop-blur shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
+                <button
+                    onClick={() => setView("resume")}
+                    className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${view === "resume"
+                            ? "text-white"
+                            : "text-white/50 hover:text-white/80"
+                        }`}
+                >
+                    {view === "resume" && (
+                        <motion.div
+                            layoutId="viewToggleBg"
+                            className="absolute inset-0 rounded-full bg-blue-600/80 shadow-[0_0_16px_rgba(59,130,246,0.3)]"
+                            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        />
+                    )}
+                    <span className="relative z-10 flex items-center gap-2">
+                        <List size={15} />
+                        Resume
+                    </span>
+                </button>
+                <button
+                    onClick={() => setView("timeline")}
+                    className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${view === "timeline"
+                            ? "text-white"
+                            : "text-white/50 hover:text-white/80"
+                        }`}
+                >
+                    {view === "timeline" && (
+                        <motion.div
+                            layoutId="viewToggleBg"
+                            className="absolute inset-0 rounded-full bg-blue-600/80 shadow-[0_0_16px_rgba(59,130,246,0.3)]"
+                            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        />
+                    )}
+                    <span className="relative z-10 flex items-center gap-2">
+                        <CalendarRange size={15} />
+                        Full Timeline
+                    </span>
+                </button>
+            </div>
+        </div>
+    );
+}
+
 export default function Journey() {
+    const [view, setView] = useState("resume");
+
+    // Resume view filters out cvOnly entries
+    const resumeExperience = EXPERIENCE.filter(item => !item.cvOnly);
+    const resumeLeadership = LEADERSHIP.filter(item => !item.cvOnly);
+
     return (
         <section id="journey" className="section">
             <div className="container-page">
@@ -71,34 +126,55 @@ export default function Journey() {
                     Quantitative research to production analytics, delivering data-driven impact across industry and academia
                 </p>
 
-                <div className="mt-12 space-y-12">
-                    {/* Work Experience */}
-                    <div>
-                        <div className="flex items-center gap-3 mb-8">
-                            <Briefcase className="text-blue-400" size={24} />
-                            <h3 className="text-2xl font-semibold">Work Experience</h3>
-                        </div>
-                        <ol className="space-y-10">
-                            {EXPERIENCE.map((item, i) => (
-                                <ExperienceCard key={i} item={item} icon={Briefcase} index={i} />
-                            ))}
-                        </ol>
-                    </div>
+                <ViewToggle view={view} setView={setView} />
 
-                    {/* Leadership */}
-                    {LEADERSHIP && LEADERSHIP.length > 0 && (
-                        <div>
-                            <div className="flex items-center gap-3 mb-8 mt-16">
-                                <Users className="text-blue-400" size={24} />
-                                <h3 className="text-2xl font-semibold">Leadership & Community</h3>
-                            </div>
-                            <ol className="space-y-10">
-                                {LEADERSHIP.map((item, i) => (
-                                    <ExperienceCard key={i} item={item} icon={Users} index={i} />
-                                ))}
-                            </ol>
-                        </div>
-                    )}
+                <div className="mt-10">
+                    <AnimatePresence mode="wait">
+                        {view === "resume" ? (
+                            <motion.div
+                                key="resume"
+                                initial={{ opacity: 0, y: 16 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -16 }}
+                                transition={{ duration: 0.35 }}
+                                className="space-y-12"
+                            >
+                                {/* Work Experience */}
+                                <div>
+                                    <div className="flex items-center gap-3 mb-8">
+                                        <Briefcase className="text-blue-400" size={24} />
+                                        <h3 className="text-2xl font-semibold">Work Experience</h3>
+                                    </div>
+                                    <ol className="space-y-10">
+                                        {resumeExperience.map((item, i) => (
+                                            <ExperienceCard key={i} item={item} icon={Briefcase} index={i} />
+                                        ))}
+                                    </ol>
+                                </div>
+
+                                {/* Leadership */}
+                                {resumeLeadership && resumeLeadership.length > 0 && (
+                                    <div>
+                                        <div className="flex items-center gap-3 mb-8 mt-16">
+                                            <Users className="text-blue-400" size={24} />
+                                            <h3 className="text-2xl font-semibold">Leadership & Community</h3>
+                                        </div>
+                                        <ol className="space-y-10">
+                                            {resumeLeadership.map((item, i) => (
+                                                <ExperienceCard key={i} item={item} icon={Users} index={i} />
+                                            ))}
+                                        </ol>
+                                    </div>
+                                )}
+                            </motion.div>
+                        ) : (
+                            <TimelineView
+                                key="timeline"
+                                experienceItems={EXPERIENCE}
+                                leadershipItems={LEADERSHIP}
+                            />
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
         </section>
